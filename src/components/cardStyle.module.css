@@ -1,0 +1,12 @@
+.cardStyle{
+    height: 150px;
+    width: 150px;
+    border-radius: 20px;
+    background-color: azure;
+    border-style: solid black 5px;
+}
+
+.name{
+    /*check why not working*/
+    text-transform: capitalize;
+}
