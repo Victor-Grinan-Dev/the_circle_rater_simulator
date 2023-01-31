@@ -12,10 +12,6 @@ const card = {
   color: "black",
 };
 
-const cardNumInput = {
-  width: "30px",
-}
-
 const PlayerCard = ({name, position, ratesDone, allPlayers}) => {
   const [otherPlayers, setOtherPlayers] = useState([]);
 
@@ -32,10 +28,18 @@ const PlayerCard = ({name, position, ratesDone, allPlayers}) => {
     
   };
 
-  const choiceHandler = (name) => {
-
+  const choiceHandler = (e) => {
+    console.log("position:",e.target.name, e.target.value);
+    for(let player of otherPlayers){
+      if(e.target.value === player.name){
+        console.log(player.name)
+        player.ranksValues.push(e.target.name);
+        player.isChosen = true;
+      }
+    }
+    console.log(otherPlayers)
   };
-
+  
   const ratingSubmitHandler = () =>{
 
   };
@@ -50,15 +54,20 @@ const PlayerCard = ({name, position, ratesDone, allPlayers}) => {
       }
       {
         otherPlayers && otherPlayers.map((_, i) => (
-          <select onChange={(e) => choiceHandler(e)} key={i}>
+          <select onChange={(e) => choiceHandler(e)} key={i} name={`${i + 1}`}>
             <option hidden > {`position: ${i + 1}`} </option>
             {
               otherPlayers.map((player, j) => (
-                !player.isChosen && <option value={`${i + 1}`} name={`${i + 1}`} key={`${i}${j}`} >{player.name}</option>
+                <option 
+                  value={player.name} 
+                  name={`${i + 1}`} 
+                  key={`${i}${j}`} 
+                  >
+                  {player.name}
+                </option>
               ))
             }
           </select>
-          // <p key={i}> {player.name} <input style={cardNumInput} type="number" placehoder={`${i}`} max={allPlayers.length} min='1'/></p>
         ))
       }
       <input type="submit" value='Submit Ratings' onClick={ratingSubmitHandler}/>
