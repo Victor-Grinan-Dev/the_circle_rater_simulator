@@ -1,5 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import { isPlayerDuplicated, replacePlayer } from '../functions/functions';
 
 const card = {
   minHeight: "150px",
@@ -12,7 +13,7 @@ const card = {
   color: "black",
 };
 
-const PlayerCard = ({name, position, ratesDone, allPlayers}) => {
+const PlayerCard = ({name, position, data: thisPlayer, ratesDone, allPlayers}) => {
   const [otherPlayers, setOtherPlayers] = useState([]);
 
   useEffect(() => {
@@ -25,19 +26,18 @@ const PlayerCard = ({name, position, ratesDone, allPlayers}) => {
       return player.name !== name;
     });
     setOtherPlayers(result);
-    
   };
 
   const choiceHandler = (e) => {
-    console.log("position:",e.target.name, e.target.value);
+    // console.log("position:",e.target.name, "player:", e.target.value);
     for(let player of otherPlayers){
-      if(e.target.value === player.name){
-        console.log(player.name)
-        player.ranksValues.push(e.target.name);
+      if(e.target.value === player?.name){
+        
+        replacePlayer(thisPlayer, player, parseInt(e.target.name)-1);
         player.isChosen = true;
       }
     }
-    console.log(otherPlayers)
+    // console.log(thisPlayer)
   };
   
   const ratingSubmitHandler = () =>{

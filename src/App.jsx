@@ -13,7 +13,8 @@ const btnStyle = {
 
 function App() {
   const [players, setPlayers] = useState([]);
-  const [isRatesComplete, setIsRatesComplete] = useState(false)
+  const [isRatesComplete, setIsRatesComplete] = useState(false);
+
   useEffect(() => {
     createPlayers();
   }, []);
@@ -23,6 +24,7 @@ function App() {
       const tempList = [];
       for (let player of playersList){
         const newPlayer = new Player(player);
+        newPlayer.myRates = Array(playersList.length - 1).fill(null);
         tempList.push(newPlayer);
       };
       setPlayers(tempList);
@@ -58,8 +60,7 @@ function App() {
         }
         {
           players.map((player, i)=>(
-            
-            <PlayerCard key={i} name={player.name} position={i+1} ratesDone={player.ratesDone} allPlayers={players}/>
+            <PlayerCard key={i} name={player.name} position={i+1} ratesDone={player.ratesDone} data={player} allPlayers={players}/>
           ))
         }
         <input type="button" value="Resolve" className='resolveBtn' style={btnStyle} onClick={()=>{
